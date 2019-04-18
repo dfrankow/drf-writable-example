@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import Avatar, Site, AccessKey, Profile, User
 
 
@@ -25,6 +27,14 @@ class AccessKeySerializer(serializers.ModelSerializer):
     class Meta:
         model = AccessKey
         fields = ('pk', 'key',)
+
+    def create(self, validated_data):
+        """Implement get-or-create semantics."""
+        try:
+            instance = AccessKey.objects.get(key=self.validated_data['key'])
+        except ObjectDoesNotExist:
+            instance = super().create(validated_data)
+        return instance
 
 
 class ProfileSerializer(WritableNestedModelSerializer):
