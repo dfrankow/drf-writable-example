@@ -1,3 +1,5 @@
-django
-gunicorn
-django-heroku
+django==2.2
+gunicorn==19.9.0
+django-heroku==0.3.1
+djangorestframework==3.9.2
+drf-writable-nested==0.5.1
