@@ -7,7 +7,7 @@ class Site(models.Model):
     url = models.CharField(max_length=100)
 
 
-class ExampleUser(models.Model):
+class User(models.Model):
     username = models.CharField(max_length=100)
 
 
@@ -17,7 +17,7 @@ class AccessKey(models.Model):
 
 class Profile(models.Model):
     sites = models.ManyToManyField(Site)
-    user = models.OneToOneField(ExampleUser, on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     access_key = models.ForeignKey(AccessKey, null=True,
                                    on_delete=models.DO_NOTHING)
 

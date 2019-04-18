@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
 
-from .models import Avatar, Site, AccessKey, Profile, ExampleUser
+from .models import Avatar, Site, AccessKey, Profile, User
 
 
 class AvatarSerializer(serializers.ModelSerializer):
@@ -47,5 +47,5 @@ class UserSerializer(WritableNestedModelSerializer):
     profile = ProfileSerializer()
 
     class Meta:
-        model = ExampleUser
+        model = User
         fields = ('pk', 'profile', 'username',)

@@ -1,13 +1,12 @@
 from rest_framework import routers, viewsets
 
 from .serializers import UserSerializer
-from .models import ExampleUser
+from .models import User
 
 
 class UserModelViewSet(viewsets.ModelViewSet):
-    queryset = ExampleUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserSerializer
-    # TODO(dan): Review for security
 
 
 # Routers provide an easy way of automatically determining the URL conf.
