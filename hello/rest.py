@@ -1,11 +1,12 @@
 from rest_framework import routers, viewsets
 
-from .models import User
+from .serializers import UserSerializer
+from .models import ExampleUser
 
 
 class UserModelViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = User
+    queryset = ExampleUser.objects.all()
+    serializer_class = UserSerializer
     # TODO(dan): Review for security
 
 

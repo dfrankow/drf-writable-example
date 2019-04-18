@@ -1,0 +1,24 @@
+{
+    "username": "test",
+    "profile": {
+        "access_key": {
+            "key": "key"
+        },
+        "sites": [
+            {
+                "url": "http://google.com"
+            },
+            {
+                "url": "http://yahoo.com"
+            }
+        ],
+        "avatars": [
+            {
+                "image": "image-1.png"
+            },
+            {
+                "image": "image-2.png"
+            }
+        ]
+    }
+}
