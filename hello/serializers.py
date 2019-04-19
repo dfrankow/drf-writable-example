@@ -6,35 +6,55 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Avatar, Site, AccessKey, Profile, User
 
 
-class AvatarSerializer(serializers.ModelSerializer):
+class GetOrCreateModelSerializer(serializers.ModelSerializer):
+    """Implement get-or-create semantics.
+
+    Requires id_fields in the Meta information, used to check for existence.
+    """
+
+    def create(self, validated_data):
+        """Implement get-or-create semantics."""
+        model_class = self.Meta.model
+        kwargs = {field: self.validated_data[field]
+                  for field in self.Meta.id_fields}
+        print("get-or-create model_class %s kwargs: %s" % (
+            model_class.__name__, str(kwargs)))
+
+        try:
+            instance = model_class.objects.get(**kwargs)
+            # TODO(dan): For fields not in id_fields, should we update?
+        except ObjectDoesNotExist:
+            instance = super().create(validated_data)
+        return instance
+
+
+class AvatarSerializer(GetOrCreateModelSerializer):
     image = serializers.CharField()
 
     class Meta:
         model = Avatar
         fields = ('pk', 'image',)
+        # id_fields for get_or_create
+        id_fields = ('image',)
 
 
-class SiteSerializer(serializers.ModelSerializer):
+class SiteSerializer(GetOrCreateModelSerializer):
     url = serializers.CharField()
 
     class Meta:
         model = Site
         fields = ('pk', 'url',)
+        # id_fields for get_or_create
+        id_fields = ('url',)
 
 
-class AccessKeySerializer(serializers.ModelSerializer):
+class AccessKeySerializer(GetOrCreateModelSerializer):
 
     class Meta:
         model = AccessKey
         fields = ('pk', 'key',)
-
-    def create(self, validated_data):
-        """Implement get-or-create semantics."""
-        try:
-            instance = AccessKey.objects.get(key=self.validated_data['key'])
-        except ObjectDoesNotExist:
-            instance = super().create(validated_data)
-        return instance
+        # id_fields for get_or_create
+        id_fields = ('key',)
 
 
 class ProfileSerializer(WritableNestedModelSerializer):
