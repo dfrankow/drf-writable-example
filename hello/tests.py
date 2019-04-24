@@ -60,7 +60,17 @@ class SerializerTest(TestCase):
         serializer = UserSerializer(data=self.USER_DATA)
         serializer.is_valid(raise_exception=True)
         user1 = serializer.save()
+        self.assertEqual('test', user1.username)
 
         serializer = UserSerializer(data=self.USER_DATA)
         with self.assertRaises(ValidationError):
             serializer.is_valid(raise_exception=True)
+
+        # change username and save again
+        user_data = self.USER_DATA.copy()
+        user_data['username'] = 'test2'
+        serializer = UserSerializer(data=user_data)
+        serializer.is_valid(raise_exception=True)
+        user2 = serializer.save()
+
+        self.assertEqual('test2', user2.username)
