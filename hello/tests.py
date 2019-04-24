@@ -74,3 +74,11 @@ class SerializerTest(TestCase):
         user2 = serializer.save()
 
         self.assertEqual('test2', user2.username)
+
+        # nested object keys are equal
+        self.assertEqual(user1.profile.access_key.key,
+                         user2.profile.access_key.key)
+
+        # nested object ids are not equal
+        self.assertNotEqual(user1.profile.access_key.id,
+                            user2.profile.access_key.id)
