@@ -8,7 +8,7 @@ class Site(models.Model):
 
 
 class User(models.Model):
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)
 
 
 class AccessKey(models.Model):
