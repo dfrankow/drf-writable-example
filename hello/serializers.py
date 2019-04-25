@@ -62,9 +62,9 @@ class ThingSerializer(WritableNestedModelSerializer):
 class ThingVersionSerializer(WritableNestedModelSerializer):
     DEFAULT_MATCH_ON = ['thing', 'version']
 
+    # Direct FK relation
+    thing = ThingSerializer(allow_null=True)
+
     class Meta:
         model = ThingVersion
         fields = ('thing', 'version')
-
-        # Direct FK relation
-        thing = ThingSerializer(allow_null=True)
