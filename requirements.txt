@@ -2,4 +2,6 @@ django==2.2
 gunicorn==19.9.0
 django-heroku==0.3.1
 djangorestframework==3.9.2
-drf-writable-nested==0.5.1
+# patched
+# drf-writable-nested==0.5.1
+https://github.com/claytondaley/drf-writable-nested/zipball/cf0c9441950f77c6680afb4ef681e583a5e92036/
