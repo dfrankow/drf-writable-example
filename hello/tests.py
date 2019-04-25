@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from .serializers import SiteSerializer, UserSerializer
+from .models import Site
 
 from rest_framework.exceptions import ValidationError
 
@@ -82,3 +83,18 @@ class SerializerTest(TestCase):
         # nested object ids are not equal
         self.assertNotEqual(user1.profile.access_key.id,
                             user2.profile.access_key.id)
+
+    def test_save_site_twice(self):
+        url = 'google.com'
+
+        serializer = SiteSerializer(data={'url': url})
+        serializer.is_valid(raise_exception=True)
+        obj = serializer.save()
+        self.assertEqual(url, obj.url)
+        self.assertEqual(1, Site.objects.filter(url=url).count())
+
+        serializer = SiteSerializer(data={'url': url})
+        serializer.is_valid(raise_exception=True)
+        obj = serializer.save()
+        self.assertEqual(url, obj.url)
+        self.assertEqual(2, Site.objects.filter(url=url).count())
