@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
 
-from .models import Avatar, Site, AccessKey, Profile, User
+from .models import Avatar, Site, AccessKey, Profile, User, Thing, ThingVersion
 
 
 class AvatarSerializer(serializers.ModelSerializer):
@@ -49,3 +49,22 @@ class UserSerializer(WritableNestedModelSerializer):
     class Meta:
         model = User
         fields = ('pk', 'profile', 'username',)
+
+
+class ThingSerializer(WritableNestedModelSerializer):
+    DEFAULT_MATCH_ON = ['name']
+
+    class Meta:
+        model = Thing
+        fields = ('name',)
+
+
+class ThingVersionSerializer(WritableNestedModelSerializer):
+    DEFAULT_MATCH_ON = ['thing', 'version']
+
+    class Meta:
+        model = ThingVersion
+        fields = ('thing', 'version')
+
+        # Direct FK relation
+        thing = ThingSerializer(allow_null=True)

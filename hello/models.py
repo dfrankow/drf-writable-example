@@ -26,3 +26,17 @@ class Avatar(models.Model):
     image = models.CharField(max_length=100)
     profile = models.ForeignKey(Profile, related_name='avatars',
                                 on_delete=models.DO_NOTHING)
+
+
+class Thing(models.Model):
+    name = models.CharField(unique=True, blank=True, null=True, max_length=191)
+
+
+class ThingVersion(models.Model):
+    thing = models.ForeignKey(Thing, models.DO_NOTHING, blank=True, null=True)
+    version = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        unique_together = (('thing',),)
+
+
