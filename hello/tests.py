@@ -80,9 +80,10 @@ class SerializerTest(TestCase):
         self.assertEqual(user1.profile.access_key.key,
                          user2.profile.access_key.key)
 
-        # nested object ids are not equal
-        self.assertNotEqual(user1.profile.access_key.id,
-                            user2.profile.access_key.id)
+        # nested object ids are equal:
+        # AccessKeySerializer is get-or-create, so it doesn't create another
+        self.assertEqual(user1.profile.access_key.id,
+                         user2.profile.access_key.id)
 
     def test_save_site_twice(self):
         url = 'google.com'
@@ -97,4 +98,8 @@ class SerializerTest(TestCase):
         serializer.is_valid(raise_exception=True)
         obj = serializer.save()
         self.assertEqual(url, obj.url)
-        self.assertEqual(2, Site.objects.filter(url=url).count())
+
+        # There is only one site
+        # SiteSerializer is get-or-create,
+        # so the second url doesn't create again
+        self.assertEqual(1, Site.objects.filter(url=url).count())
