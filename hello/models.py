@@ -16,6 +16,9 @@ class User(models.Model):
     class Meta:
         unique_together = ('username',)
 
+    class Meta:
+        unique_together = ('username',)
+
 
 class AccessKey(models.Model):
     key = models.CharField(max_length=100)
