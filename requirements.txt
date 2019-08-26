@@ -1,4 +1,4 @@
 django==2.2.4
 djangorestframework==3.9.2
 # patched to add get-or-create semantics for nested objects
-https://github.com/claytondaley/drf-writable-nested/zipball/b49aefae8a0bc7ce763e007ab3d474d11cfd4b07/
+https://github.com/claytondaley/drf-writable-nested/zipball/188691e59596b4435e7fc05fc55444ccd60e1226
