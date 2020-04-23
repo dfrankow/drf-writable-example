@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
+from drf_writable_nested.mixins import GetOrCreateNestedSerializerMixin
 
 from .models import Avatar, Site, AccessKey, Profile, User
 
@@ -12,7 +13,9 @@ class AvatarSerializer(serializers.ModelSerializer):
         fields = ('pk', 'image',)
 
 
-class SiteSerializer(serializers.ModelSerializer):
+class SiteSerializer(serializers.ModelSerializer,
+                     GetOrCreateNestedSerializerMixin):
+    DEFAULT_MATCH_ON = ['url',]
     url = serializers.CharField()
 
     class Meta:
