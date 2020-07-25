@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Site(models.Model):
-    url = models.CharField(max_length=100)
+    url = models.CharField(max_length=100, unique=True)
 
 
 class User(models.Model):
@@ -12,7 +12,7 @@ class User(models.Model):
 
 
 class AccessKey(models.Model):
-    key = models.CharField(max_length=100)
+    key = models.CharField(max_length=100, unique=True)
 
 
 class Profile(models.Model):
