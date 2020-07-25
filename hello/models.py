@@ -6,13 +6,22 @@ from django.db import models
 class Site(models.Model):
     url = models.CharField(max_length=100)
 
+    class Meta:
+        unique_together = ('url',)
+
 
 class User(models.Model):
     username = models.CharField(max_length=100, unique=True)
 
+    class Meta:
+        unique_together = ('username',)
+
 
 class AccessKey(models.Model):
     key = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ('key',)
 
 
 class Profile(models.Model):
